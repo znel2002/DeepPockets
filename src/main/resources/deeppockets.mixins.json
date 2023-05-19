@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "znel2002.deeppockets.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "InventoryScreenMixin",
+    "PlayerHandlerMixin",
+    "HandledScreenMixin",
+    "InventoryMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

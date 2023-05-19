@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "deeppockets",
+  "version": "${version}",
+  "name": "deeppockets",
+  "description": "DeepPockets",
+  "authors": [],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/deeppockets/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "znel2002.deeppockets.client.DeeppocketsClient"
+    ],
+    "main": [
+      "znel2002.deeppockets.Deeppockets"
+    ]
+  },
+  "mixins": [
+    "deeppockets.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.19",
+    "fabric": "*",
+    "minecraft": "1.19.4"
+  }
+}

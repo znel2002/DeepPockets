@@ -10,7 +10,7 @@ public class InventoryMixin {
 
     @ModifyArg(method = "<init>", index = 0, at = @At(value = "INVOKE", ordinal = 0, target = "Lnet/minecraft/util/collection/DefaultedList;ofSize(ILjava/lang/Object;)Lnet/minecraft/util/collection/DefaultedList;"))
     private int modifyInvSize(int size) {
-        return 39;
+        return 43;
     }
 
 }

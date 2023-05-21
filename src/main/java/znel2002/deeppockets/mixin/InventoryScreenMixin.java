@@ -45,6 +45,7 @@ public abstract class InventoryScreenMixin extends AbstractInventoryScreen<Playe
     @Inject(method = "isClickOutsideBounds", at = @At("TAIL"), cancellable = true)
     private void addRows(double mouseX, double mouseY, int left, int top, int button, CallbackInfoReturnable<Boolean> info) {
         info.setReturnValue( info.getReturnValue() && mouseY >= (double)(top + this.backgroundWidth + 25) );
+
     }
 
     @Inject(at = @At("RETURN"), method = "drawBackground")

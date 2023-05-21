@@ -1,6 +1,5 @@
 package znel2002.deeppockets.mixin;
 
-import net.minecraft.client.gui.screen.advancement.AdvancementTab;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
@@ -17,6 +16,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import znel2002.deeppockets.Deeppockets;
+import znel2002.deeppockets.LockableSlot;
 import znel2002.deeppockets.client.DeeppocketsClient;
 
 @Mixin(PlayerScreenHandler.class)
@@ -38,13 +38,16 @@ public abstract class PlayerHandlerMixin extends ScreenHandler {
 
     @Inject(method = "<init>", at = @At("TAIL"))
     private void addMoreRows(PlayerInventory inventory, boolean onServer, PlayerEntity owner, CallbackInfo info) {
-        for (int n = 0; n < 7; ++n){
-            this.addSlot(new Slot(inventory, n+36, 175, 5 -(n * -18)));
-        }
+        for (int n = 0; n < 7; ++n) {
+            this.addSlot(new Slot(inventory, n + 36, 175, 5 - (n * -18)));
+            ((LockableSlot)this.slots.get(n+36)).deeppockets$setActive(false);
+            // cast to LockableSlot so we can use our custom methods
 
+        }
+        Deeppockets.LOGGER.info("Added 7 more rows to player inventory");
     }
 
-    @Inject(method = "onClosed", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "onClosed", at = @At("HEAD"))
     private void close(PlayerEntity player, CallbackInfo info) {
 
         // Set Deep Pockets level to the level of protection of the armor
@@ -53,15 +56,21 @@ public abstract class PlayerHandlerMixin extends ScreenHandler {
 
         for (ItemStack stack : player.getArmorItems()) {
             Deeppockets.LOGGER.info("Armor level: " + stack.getEnchantments());
-            for(NbtElement element : stack.getEnchantments()) {
+            for (NbtElement element : stack.getEnchantments()) {
                 if (element.toString().contains("protection")) {
-                    level += element.toString().charAt(15) - '0';
-                    // Log
-                    Deeppockets.LOGGER.info("Armor level: " + level);
+                    if (element.toString().split(",")[1].split(":")[1].charAt(0) - '0' > level) {
+                        level = element.toString().split(",")[1].split(":")[1].charAt(0) - '0';
+                    }
                 }
             }
-                }
-            }
+        }
+        DeeppocketsClient.LEVEL = level;
 
-            }
 
+        // loop for all levels
+        // for (int i = 0; i < DeeppocketsClient.LEVEL; i++) {
+        //     LockableSlot slot = (LockableSlot) this.slots.get(i);
+        //     slot.deeppockets$setActive(true);
+        // }
+    }
+}

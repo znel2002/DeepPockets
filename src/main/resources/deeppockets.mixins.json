@@ -8,7 +8,8 @@
     "PlayerHandlerMixin",
     "HandledScreenMixin",
     "InventoryMixin",
-    "InventoryEffectsMixin"
+    "InventoryEffectsMixin",
+    "LockableSlotMixin"
   ],
   "client": [
   ],

@@ -23,21 +23,21 @@ public abstract class LockableSlotMixin implements LockableSlot {
     @Override
     public void deeppockets$setActive(boolean active) {
         this.deeppockets$active = active;
-        Deeppockets.LOGGER.info("Slot is now " + (active ? "active" : "inactive"));
+
     }
 
+     // @Inject(method = "isEnabled", at = @At("HEAD"), cancellable = true)
+     // private void Deeppockets$isEnabled(CallbackInfoReturnable<Boolean> cir) {
+     //     cir.setReturnValue(this.deeppockets$active);
+     // }
 
     @Inject(method = "canInsert", at = @At("HEAD"), cancellable = true)
     private void deeppockets$insertItem(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
 
-        if (!this.deeppockets$active) {
-            cir.setReturnValue(false);
-        }
+        cir.setReturnValue(deeppockets$active);
     }
     @Inject(method = "canTakeItems", at = @At("HEAD"), cancellable = true)
     private void deeppockets$takeItems(PlayerEntity playerEntity, CallbackInfoReturnable<Boolean> cir) {
-        if (!this.deeppockets$active) {
-            cir.setReturnValue(false);
-        }
+        cir.setReturnValue(deeppockets$active);
     }
 }

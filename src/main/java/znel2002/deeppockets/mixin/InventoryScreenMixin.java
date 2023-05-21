@@ -13,6 +13,8 @@ import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -50,14 +52,29 @@ public abstract class InventoryScreenMixin extends AbstractInventoryScreen<Playe
 
     @Inject(at = @At("RETURN"), method = "drawBackground")
     private void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY, CallbackInfo info) {
+
         RenderSystem.setShader(GameRenderer::getRenderTypeTextProgram);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, Full);
         // Log x and y
+        //int level = 0;
+        //Iterable<ItemStack> items = client.player.getArmorItems();
+//
+//
+        //for (ItemStack stack :  items) {
+//
+        //    for (NbtElement element : stack.getEnchantments()) {
+        //        if (element.toString().contains("protection")) {
+        //            if (element.toString().split(",")[1].split(":")[1].charAt(0) - '0' > level) {
+        //                level = element.toString().split(",")[1].split(":")[1].charAt(0) - '0';
+        //            }
+        //        }
+        //    }
+        //}
+            // Deeppockets.LOGGER.info("x: " + mouseX + " y: " + mouseY);
+            DrawableHelper.drawTexture(matrices, 565, 171, 0, 0, 23, 133, 23, 133);
+        }
 
-        // Deeppockets.LOGGER.info("x: " + mouseX + " y: " + mouseY);
-        DrawableHelper.drawTexture(matrices, 565, 171, 0, 0, 23, 133, 23, 133);
-    }
 
     // @Inject(at = @At("RETURN"), method = "init")
     // private void init(CallbackInfo info) {
